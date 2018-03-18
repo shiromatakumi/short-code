@@ -128,6 +128,7 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 }
 .retv_blogcard .retv_blogcard__title {
 	margin-bottom: 10px;
+	font-weight: bold;
 }
 .retv_blogcard .retv_blogcard__excerpt {
 	font-size: .8rem;
@@ -149,5 +150,47 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 }
 add_action( 'wp_head', 'retv_blogcard_add_style' );
 
+/**
+ * リンクをボタンにするショートコード
+ */
+if( !function_exists( 'retv_button_link' )) {
+	function retv_button_link( $atts, $content = "" ) {
+		return '<div class="retv_button-link">' . $content . '</div>';
+	}
+}
+add_shortcode( 'sc-button', 'retv_button_link');
 
+if(!function_exists( 'retv_button_link_add_style' )) {
+	function retv_button_link_add_style() {
+		$button_css = '<style>
+.retv_button-link {
+	text-align: center;
+	margin-bottom: 16px;
+}
+.retv_button-link a {
+	display: block;
+	width: 100%;
+	max-width: 300px;
+	padding: 12px 0;
+	background-color: #666;
+	color: #fff;
+	text-decoration: none;
+	box-shadow: 0 4px #333;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+	-webkit-transform: translateY(0px);
+	transform: translateY(0px);
+	border-radius: 6px;
+	margin: 0 auto;
+}
+.retv_button-link a:hover {
+	box-shadow: 0 0 #111;
+	-webkit-transform: translateY(4px);
+	transform: translateY(4px);
+}
+</style>';
+		echo $button_css;
+	}
+}
+add_action( 'wp_head', 'retv_button_link_add_style' );
 
