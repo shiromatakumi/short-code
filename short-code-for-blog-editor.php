@@ -15,6 +15,7 @@ if(!function_exists( 'retv_add_quicktags' )) {
 			  QTags.addButton('retv-qt-youtube','YouTube軽量化','[sc-youtube id="" alt=""]');
 			  QTags.addButton('retv-qt-blogcard-id','ブログカード（ID）','[sc-blogcard id=""]');
 			  QTags.addButton('retv-qt-blogcard-slug','ブログカード（スラッグ）','[sc-blogcard slug=""]');
+			  QTags.addButton('retv-qt-button-link','ボタンリンク','[sc-button][/sc-button]');
 			</script>
 		<?php }
 	}

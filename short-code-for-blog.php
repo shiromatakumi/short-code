@@ -151,7 +151,7 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 add_action( 'wp_head', 'retv_blogcard_add_style' );
 
 /**
- * リンクをボタンにするショートコード
+ * リンクをボタンにするショートコード [sc-button] [/sc-button]
  */
 if( !function_exists( 'retv_button_link' )) {
 	function retv_button_link( $atts, $content = "" ) {
