@@ -47,7 +47,7 @@ if(!function_exists( 'retv_youtube_add_script' )) {
 add_action( 'wp_footer', 'retv_youtube_add_script' );
 
 /**
- * 内部リンクをブログカードにする [sc-link id=""] [sc-link slug=""]
+ * 内部リンクをブログカードにする [sc-blogcard id=""] [sc-blogcard slug=""]
  */
 if( !function_exists( 'retv_blogcard_link' )) {
 	function retv_blogcard_link($atts) {
@@ -72,7 +72,7 @@ if( !function_exists( 'retv_blogcard_link' )) {
 		// 
 		if($link_id) {
 			$article_title = get_the_title( $link_id );
-			$thumb_url = get_the_post_thumbnail( $link_id , 'medium' ,$article_title);
+			$thumb_url = get_the_post_thumbnail_url( $link_id , 'medium');
 			if ($thumb_url === '') {
 				$thumb_url = SHORT_CODE_FOR_BLOG_DIR . 'img/noimage.jpg';
 			}
@@ -92,12 +92,12 @@ function retv_get_the_excerpt($post_id){
 		$excerpt = $post->post_excerpt;
 	} else {
 		$excerpt = $post->post_content;
+		$excerpt = strip_tags($excerpt, true);
+		$excerpt = strip_shortcodes($excerpt, true);
 	}
 	if( strlen($excerpt) > 80) {
 		$excerpt = mb_strimwidth($excerpt, 0, 80, '...', 'UTF-8');	
 	}
-	$excerpt = wp_strip_all_tags($excerpt, true);
-	
 	return $excerpt;
 }
 
@@ -106,6 +106,7 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 		$blogcard_css = '
 <style>
 .retv_blogcard {
+	margin-bottom: 16px;
 	padding: 14px;
 	border: 1px solid #ddd;
 	display: -webkit-flex;
@@ -115,6 +116,9 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 	width:150px;
 	height:150px;
 	background-color: #ddd;
+	background-size: cover;
+}
+.retv_blogcard .retv_blogcard__thumbnail-link {
 	margin-right: 16px;
 }
 .retv_blogcard .retv_blogcard__thumbnail-link,
@@ -134,7 +138,7 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 	.retv_blogcard {
 		padding: 10px;
 	}
-	.retv_blogcard .retv_blogcard__thumbnail {
+	.retv_blogcard .retv_blogcard__thumbnail-link {
 		width:100px;
 		height:100px;
 		margin-right: 10px;
