@@ -117,6 +117,7 @@ if(!function_exists( 'retv_blogcard_add_style')) {
 	height:150px;
 	background-color: #ddd;
 	background-size: cover;
+	background-position: center;
 }
 .retv_blogcard .retv_blogcard__thumbnail-link {
 	margin-right: 16px;
@@ -155,38 +156,96 @@ add_action( 'wp_head', 'retv_blogcard_add_style' );
  */
 if( !function_exists( 'retv_button_link' )) {
 	function retv_button_link( $atts, $content = "" ) {
-		return '<div class="retv_button-link">' . $content . '</div>';
+		$class = isset($atts['class']) ? $atts['class'] : '';
+		$align = isset($atts['align']) ? ' align-' . $atts['align'] : '';
+		return '<div class="retv_button-link ' . $class . $align .'">' . $content . '</div>';
 	}
 }
 add_shortcode( 'sc-button', 'retv_button_link');
+
+if( !function_exists( 'retv_flat_link' )) {
+	function retv_flat_link( $atts, $content = "" ) {
+		$class = isset($atts['class']) ? ' ' . $atts['class'] : '';
+		$align = isset($atts['align']) ? ' align-' . $atts['align'] : '';
+		return '<div class="retv_flat-link' . $class . $align .'">' . $content . '</div>';
+	}
+}
+add_shortcode( 'sc-flat', 'retv_flat_link');
 
 if(!function_exists( 'retv_button_link_add_style' )) {
 	function retv_button_link_add_style() {
 		$button_css = '<style>
 .retv_button-link {
+	margin-bottom: 20px;
+}
+.retv_button-link.align-center {
 	text-align: center;
-	margin-bottom: 16px;
 }
 .retv_button-link a {
-	display: block;
-	width: 100%;
-	max-width: 300px;
-	padding: 12px 0;
-	background-color: #666;
+	position: relative;
+	display: inline-block;
+	padding: 12px 24px;
+	background-color: #dc1826;
 	color: #fff;
 	text-decoration: none;
-	box-shadow: 0 4px #333;
+	box-shadow: 0 4px #781c23;
 	-webkit-transition: all .3s;
 	transition: all .3s;
 	-webkit-transform: translateY(0px);
 	transform: translateY(0px);
-	border-radius: 6px;
+	border-radius: 4px;
 	margin: 0 auto;
+}
+.retv_button-link.blue a {
+	background-color: #2f54c6;
+	box-shadow: 0 4px #1a3589;
+}
+.retv_button-link.orange a {
+	background-color: #ea7f1a;
+	box-shadow: 0 4px #ad641f;
+}
+.retv_button-link.light a {
+	background-color: #d76068;
+	box-shadow: 0 4px #b1353e;
+}
+.retv_button-link.lightblue a {
+	background-color: #5682cd;
+	box-shadow: 0 4px #3964ac;
+}
+.retv_button-link.lightorange a {
+	background-color: #ef9948;
+	box-shadow: 0 4px #b56c26;
+}
+.retv_button-link.shiny a::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 50%;
+	background-color: #fff;
+	opacity: .2;
+	top: 0;
+	left: 0;
+	-webkit-transition: all .3s;
+	transition: all .3s;
 }
 .retv_button-link a:hover {
 	box-shadow: 0 0 #111;
 	-webkit-transform: translateY(4px);
 	transform: translateY(4px);
+}
+.retv_button-link.shiny a:hover::before {
+	opacity: 0;
+}
+.retv_flat-link a {
+	display: inline-block;
+	padding: 12px 24px;
+	background-color: #dc1826;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+}
+.retv_flat-link.light a {
+	background-color: #d76068;
 }
 </style>';
 		echo $button_css;
@@ -194,3 +253,27 @@ if(!function_exists( 'retv_button_link_add_style' )) {
 }
 add_action( 'wp_head', 'retv_button_link_add_style' );
 
+/**
+ * ボックスで囲むショートコード [sc-box] [/sc-box]
+ */
+if( !function_exists( 'retv_wrap_box' )) {
+	function retv_wrap_box( $atts, $content = "" ) {
+		$class = isset($atts['class']) ? $atts['class'] : '';
+		return '<div class="retv_box ' . $class . '">' . $content . '</div>';
+	}
+}
+add_shortcode( 'sc-box', 'retv_wrap_box');
+
+if(!function_exists( 'retv_wrap_box_css' )) {
+	function retv_wrap_box_css() {
+		$button_css = '<style>
+.retv_box {
+	margin: 32px 0;
+	padding: 18px 16px 14px;
+	border: 1px solid #eee;
+}
+</style>';
+		echo $button_css;
+	}
+}
+add_action( 'wp_head', 'retv_wrap_box_css' );
